@@ -5,10 +5,11 @@ import org.digital_wallet.backend.api.model.Account;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
+import java.util.function.Function;
 
 public class CalculationUtils {
 
-    public static List<Account> recalculateAccountBalances(List<Account> fetchedAccounts, BigDecimal exchangeRate) {
+    public static List<Account> recalculateAccountBalances(List<Account> fetchedAccounts, Function<String, BigDecimal> exchangeRateLookupFunction) {
         return fetchedAccounts.stream()
                 .peek(account -> {
                     BigDecimal totalBalance = account.getTransactions().stream()
@@ -16,7 +17,7 @@ public class CalculationUtils {
                             .reduce(BigDecimal.ZERO, BigDecimal::add);
                     totalBalance = roundIfNeeded(account.getCurrency(), totalBalance);
                     account.setTotalBalance(totalBalance);
-                    account.setTotalBalanceChf(roundToFiveRappen(totalBalance.multiply(exchangeRate)));
+                    account.setTotalBalanceChf(roundToFiveRappen(totalBalance.multiply(exchangeRateLookupFunction.apply(account.getCurrency()))));
                 })
                 .toList();
     }

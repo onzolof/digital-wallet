@@ -5,6 +5,7 @@ import org.digital_wallet.backend.natwest.NatWestClient;
 import org.digital_wallet.backend.natwest.NatWestTransaction;
 import org.digital_wallet.backend.natwest.NatWestAccount;
 import org.digital_wallet.backend.utils.CalculationUtils;
+import org.digital_wallet.backend.utils.ExchangeRateClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +20,14 @@ public class AccountService {
 //    todo: write unit test
 
     private final NatWestClient natWestClient;
+    private final MockDataGenerator mockDataGenerator;
+    private final ExchangeRateClient exchangeRateClient;
 
     @Autowired
-    public AccountService(NatWestClient natWestClient) {
+    public AccountService(NatWestClient natWestClient, MockDataGenerator mockDataGenerator, ExchangeRateClient exchangeRateClient) {
         this.natWestClient = natWestClient;
+        this.mockDataGenerator = mockDataGenerator;
+        this.exchangeRateClient = exchangeRateClient;
     }
 
     public Optional<AccountOverview> getAccountOverview() {
@@ -56,9 +61,7 @@ public class AccountService {
                     return toAccount(natWestAccount, transactions);
                 })
                 .toList();
-//        todo: append fake data here
-//        todo: properly lookup the exchange rate
-        return CalculationUtils.recalculateAccountBalances(fetchedAccounts, new BigDecimal(1.1));
+        return CalculationUtils.recalculateAccountBalances(mockDataGenerator.append(fetchedAccounts), exchangeRateClient::fetchExchangeRate);
     }
 
 
@@ -68,7 +71,7 @@ public class AccountService {
                 account.getUsername(),
                 account.getAccountId(),
                 account.getCurrency(),
-                account.getAccountType(),
+                account.getAccountCategory(),
                 account.getTotalBalance(),
                 account.getTotalBalanceChf());
     }

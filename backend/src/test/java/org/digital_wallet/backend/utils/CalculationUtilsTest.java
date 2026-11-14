@@ -5,6 +5,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import org.digital_wallet.backend.api.model.Account;
@@ -17,7 +18,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class CalculationUtilsTest {
 
-    private static final BigDecimal EXCHANGE_RATE = new BigDecimal("1.20");
+    private static final Function<String, BigDecimal> EXCHANGE_RATE = currency -> new BigDecimal("1.20");
 
     @ParameterizedTest(name = "{0} balance {2} converts to {3} CHF")
     @MethodSource("accountBalances")
