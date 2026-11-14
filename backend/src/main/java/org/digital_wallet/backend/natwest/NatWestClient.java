@@ -40,14 +40,10 @@ public class NatWestClient {
     private final HashMap<String, String> tokens = new HashMap<>();
 
     @Autowired
-    public NatWestClient(NatwestProperties properties, JsonMapper jsonMapper) {
-        this(RestClient.builder(), jsonMapper, properties);
-    }
-
-    NatWestClient(RestClient.Builder restClientBuilder, JsonMapper jsonMapper, NatwestProperties properties) {
-        this.restClient = restClientBuilder.build();
-        this.jsonMapper = jsonMapper;
+    public NatWestClient(RestClient restClient, NatwestProperties properties, JsonMapper jsonMapper) {
+        this.restClient = restClient;
         this.properties = properties;
+        this.jsonMapper = jsonMapper;
     }
 
     public List<NatwestAccount> fetchAccounts() {
