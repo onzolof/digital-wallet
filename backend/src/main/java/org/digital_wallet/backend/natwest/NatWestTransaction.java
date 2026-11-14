@@ -1,6 +1,6 @@
 package org.digital_wallet.backend.natwest;
 
-public record NatwestTransaction(
+public record NatWestTransaction(
 		String accountId,
 		String transactionId,
 		String amount,

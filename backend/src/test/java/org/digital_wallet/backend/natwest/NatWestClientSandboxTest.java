@@ -32,7 +32,7 @@ class NatWestClientSandboxTest {
         });
 
         String firstAccountId = accounts.get(0).accountId();
-        List<NatwestTransaction> transactions = client.fetchTransactions(firstAccountId);
+        List<NatWestTransaction> transactions = client.fetchTransactions(firstAccountId);
 
         assertThat(transactions).allSatisfy(transaction -> {
             assertThat(transaction.accountId()).isEqualTo(firstAccountId);

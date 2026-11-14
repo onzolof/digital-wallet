@@ -50,7 +50,7 @@ public class NatWestClient {
         return withAccessToken(this::readAccounts, true);
     }
 
-    public List<NatwestTransaction> fetchTransactions(String accountId) {
+    public List<NatWestTransaction> fetchTransactions(String accountId) {
         if (isBlank(accountId)) {
             throw new IllegalArgumentException("accountId is required");
         }
@@ -200,7 +200,7 @@ public class NatWestClient {
         return List.copyOf(result);
     }
 
-    private List<NatwestTransaction> readTransactions(String accessToken, String accountId) {
+    private List<NatWestTransaction> readTransactions(String accessToken, String accountId) {
         URI uri = UriComponentsBuilder.fromUriString(properties.apiUrlPrefix())
                 .path(TRANSACTIONS_URL)
                 .buildAndExpand(accountId)
@@ -210,10 +210,10 @@ public class NatWestClient {
         if (!transactions.isArray()) {
             return List.of();
         }
-        List<NatwestTransaction> result = new ArrayList<>();
+        List<NatWestTransaction> result = new ArrayList<>();
         for (JsonNode transaction : transactions) {
             JsonNode amount = transaction.path("Amount");
-            result.add(new NatwestTransaction(
+            result.add(new NatWestTransaction(
                     parseText(transaction, "AccountId"),
                     parseText(transaction, "TransactionId"),
                     parseText(amount, "Amount"),
