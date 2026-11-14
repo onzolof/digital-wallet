@@ -18,7 +18,7 @@ class NatWestClientSandboxTest {
     private final NatWestClient client;
 
     @Autowired
-    public NatWestClientSandboxTest(NatWestClient natWestClient){
+    public NatWestClientSandboxTest(NatWestClient natWestClient) {
         client = natWestClient;
     }
 

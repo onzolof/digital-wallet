@@ -1,13 +1,5 @@
 package org.digital_wallet.backend.utils;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.params.provider.Arguments.arguments;
-
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Stream;
-
 import org.digital_wallet.backend.api.model.Account;
 import org.digital_wallet.backend.api.model.Transaction;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,6 +7,14 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class CalculationUtilsTest {
 

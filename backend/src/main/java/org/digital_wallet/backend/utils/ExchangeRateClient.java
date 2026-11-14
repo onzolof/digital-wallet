@@ -40,5 +40,6 @@ public class ExchangeRateClient {
         return response.rate();
     }
 
-    private record ExchangeRateResponse(BigDecimal rate) {}
+    private record ExchangeRateResponse(BigDecimal rate) {
+    }
 }

@@ -16,7 +16,7 @@ public class ApplicationConfig {
     private final Environment environment;
 
     @Autowired
-    public ApplicationConfig(Environment environment){
+    public ApplicationConfig(Environment environment) {
         this.environment = environment;
     }
 
@@ -33,7 +33,7 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public RestClient restClient(){
+    public RestClient restClient() {
         return RestClient.builder().build();
     }
 }

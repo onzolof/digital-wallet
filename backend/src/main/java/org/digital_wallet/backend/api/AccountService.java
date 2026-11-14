@@ -1,9 +1,12 @@
 package org.digital_wallet.backend.api;
 
-import org.digital_wallet.backend.api.model.*;
+import org.digital_wallet.backend.api.model.Account;
+import org.digital_wallet.backend.api.model.AccountOverview;
+import org.digital_wallet.backend.api.model.MinimalAccount;
+import org.digital_wallet.backend.api.model.Transaction;
+import org.digital_wallet.backend.natwest.NatWestAccount;
 import org.digital_wallet.backend.natwest.NatWestClient;
 import org.digital_wallet.backend.natwest.NatWestTransaction;
-import org.digital_wallet.backend.natwest.NatWestAccount;
 import org.digital_wallet.backend.utils.CalculationUtils;
 import org.digital_wallet.backend.utils.ExchangeRateClient;
 import org.springframework.beans.factory.annotation.Autowired;
