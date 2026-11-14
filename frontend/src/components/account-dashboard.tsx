@@ -1,13 +1,12 @@
 import { useState } from 'react'
 import { ArrowLeft } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
-import { AccountCard } from '@/components/dashboard/account-card/AccountCard'
-import { Breadcrumb } from '@/components/dashboard/breadcrumb/Breadcrumb'
-import { DashboardHeader } from '@/components/dashboard/dashboard-header/DashboardHeader'
-import { TransactionChart } from '@/components/dashboard/transaction-chart/TransactionChart'
-import { TransactionTable } from '@/components/dashboard/transaction-table/TransactionTable'
-import { balanceTone, formatMoney } from '@/components/dashboard/utils'
-import { cn } from '@/lib/utils'
+import { AccountCard } from '@/components/dashboard/AccountCard'
+import { Breadcrumb } from '@/components/dashboard/Breadcrumb'
+import { DashboardHeader } from '@/components/dashboard/DashboardHeader'
+import { Money } from '@/components/dashboard/Money'
+import { TransactionChart } from '@/components/dashboard/TransactionChart'
+import { TransactionTable } from '@/components/dashboard/TransactionTable'
 import {
   useGetAccountOverviewQuery,
   useGetAccountQuery,
@@ -50,9 +49,6 @@ export function AccountDashboard() {
             />
             <section className="mt-9">
               <div>
-                <p className="mb-2 text-xs font-semibold tracking-[0.14em] text-gray-500">
-                  CONNECTED BANKING
-                </p>
                 <h2 className="m-0 flex items-center gap-2.5 text-[1.75rem] font-semibold tracking-tight text-[#17251f]">
                   Your accounts{' '}
                   <Badge
@@ -64,11 +60,10 @@ export function AccountDashboard() {
                 </h2>
               </div>
               <div className="mt-[18px] grid grid-cols-1 gap-4 md:grid-cols-3">
-                {overview.accounts.map((account, index) => (
+                {overview.accounts.map((account) => (
                   <AccountCard
                     key={account.accountId}
                     account={account}
-                    index={index}
                     onSelect={setSelectedId}
                   />
                 ))}
@@ -88,12 +83,6 @@ export function AccountDashboard() {
               </button>
               <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
                 <div>
-                  <p className="mb-2 text-xs font-semibold tracking-[0.14em] text-gray-500">
-                    {(detail?.accountCategory ?? 'Account').toUpperCase()}{' '}
-                    <span className="tracking-normal text-[#98a2b3]">
-                      · {selectedId}
-                    </span>
-                  </p>
                   <h1 className="m-0 text-4xl font-semibold leading-tight tracking-tight text-[#17251f]">
                     {detail?.accountCategory ?? 'Account'}
                   </h1>
@@ -105,18 +94,15 @@ export function AccountDashboard() {
                   <span className="block text-[13px] text-[#667085]">
                     Current balance
                   </span>
-                  <strong
-                    className={cn(
-                      'text-[2rem] tracking-tight',
-                      detail
-                        ? balanceTone(detail.totalBalance)
-                        : 'text-[#17251f]',
-                    )}
-                  >
-                    {detail
-                      ? formatMoney(detail.totalBalance, detail.currency)
-                      : '—'}
-                  </strong>
+                  {detail ? (
+                    <Money
+                      value={detail.totalBalance}
+                      currency={detail.currency}
+                      className="text-[2rem] font-semibold tracking-tight"
+                    />
+                  ) : (
+                    <strong className="text-[2rem] tracking-tight">—</strong>
+                  )}
                 </div>
               </div>
             </section>

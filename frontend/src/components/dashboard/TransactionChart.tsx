@@ -1,8 +1,8 @@
 import { useMemo } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { formatMoney } from '@/components/dashboard/utils'
+import { cashFlow } from '@/components/dashboard/chartUtils'
 import type { Transaction } from '@/store/walletApi'
-import { cashFlow } from './utils'
 
 type TransactionChartProps = {
   transactions: Transaction[]
@@ -19,15 +19,9 @@ export function TransactionChart({
     <Card className="mt-[22px]">
       <CardContent>
         <div>
-          <p className="mb-2 text-xs font-semibold tracking-[0.14em] text-gray-500">
-            CASH FLOW
-          </p>
           <h2 className="m-0 text-[1.75rem] font-semibold tracking-tight text-[#17251f]">
-            Income vs. expenses
+            Income vs. Expenses
           </h2>
-          <p className="mt-2 text-[#667085]">
-            A closer look at your daily activity
-          </p>
         </div>
         <div className="mt-[18px] flex items-center gap-6 text-[13px] text-[#475467]">
           <span className="inline-flex items-center gap-2">
@@ -79,7 +73,7 @@ export function TransactionChart({
             </div>
           </div>
         </div>
-        <div className="mt-3 text-right text-xs font-semibold tracking-widest text-[#98a2b3] md:text-right">
+        <div className="mt-3 text-right text-xs font-medium text-[#98a2b3] md:text-right">
           {flow.monthLabel}
         </div>
       </CardContent>

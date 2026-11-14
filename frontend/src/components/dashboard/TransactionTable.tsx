@@ -1,14 +1,6 @@
 import { useMemo, useState } from 'react'
-import {
-  ArrowDownLeft,
-  ArrowLeft,
-  ArrowRight,
-  ArrowUpRight,
-  ChevronDown,
-  Search,
-} from 'lucide-react'
+import { ArrowDownLeft, ArrowUpRight, ChevronDown, Search } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import {
@@ -19,10 +11,15 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { Money } from '@/components/dashboard/Money'
+import { formatDate, isCredit } from '@/components/dashboard/utils'
+import {
+  toggleSort,
+  visibleTransactions,
+  type TransactionSort,
+} from '@/components/dashboard/transactionTableUtils'
 import { cn } from '@/lib/utils'
-import { formatDate, formatMoney, isCredit } from '@/components/dashboard/utils'
 import type { Transaction } from '@/store/walletApi'
-import { toggleSort, visibleTransactions, type TransactionSort } from './utils'
 
 type TransactionTableProps = {
   transactions: Transaction[]
@@ -44,9 +41,6 @@ export function TransactionTable({ transactions }: TransactionTableProps) {
       <CardContent>
         <div className="mb-[18px] flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
           <div>
-            <p className="mb-2 text-xs font-semibold tracking-[0.14em] text-gray-500">
-              ACCOUNT ACTIVITY
-            </p>
             <h2 className="m-0 flex items-center gap-2.5 text-[1.75rem] font-semibold tracking-tight text-[#17251f]">
               Transactions{' '}
               <Badge
@@ -112,7 +106,8 @@ export function TransactionTable({ transactions }: TransactionTableProps) {
           <TableBody>
             {rows.map((transaction) => {
               const incoming = isCredit(transaction.creditDebitIndicator)
-              const amount = Math.abs(Number(transaction.amount))
+              const magnitude = Math.abs(Number(transaction.amount))
+              const signed = incoming ? magnitude : -magnitude
               return (
                 <TableRow key={transaction.transactionId}>
                   <TableCell>
@@ -141,19 +136,17 @@ export function TransactionTable({ transactions }: TransactionTableProps) {
                   <TableCell>
                     <Badge
                       variant="secondary"
-                      className="bg-[#eef6f1] text-[#1f7a4d]"
+                      className="bg-[#eef2ef] text-[#667085]"
                     >
                       {transaction.status}
                     </Badge>
                   </TableCell>
-                  <TableCell
-                    className={cn(
-                      'text-right font-semibold',
-                      incoming ? 'text-[#17251f]' : 'text-red-600',
-                    )}
-                  >
-                    {incoming ? '+' : '−'}
-                    {formatMoney(amount, transaction.currency)}
+                  <TableCell className="text-right">
+                    <Money
+                      value={signed}
+                      currency={transaction.currency}
+                      className="font-semibold"
+                    />
                   </TableCell>
                 </TableRow>
               )
@@ -167,26 +160,8 @@ export function TransactionTable({ transactions }: TransactionTableProps) {
               : 'No transactions on this account.'}
           </div>
         )}
-        <div className="mt-4 flex items-center justify-between text-[13px] text-[#667085]">
-          <span>Showing {rows.length}</span>
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              size="icon"
-              aria-label="Previous page"
-              disabled
-            >
-              <ArrowLeft />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              aria-label="Next page"
-              disabled
-            >
-              <ArrowRight />
-            </Button>
-          </div>
+        <div className="mt-4 text-[13px] text-[#667085]">
+          Showing {rows.length}
         </div>
       </CardContent>
     </Card>

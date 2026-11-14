@@ -54,10 +54,11 @@ export function cashFlow(transactions: Transaction[]): CashFlow {
   return {
     axisMax,
     monthLabel: latest
-      ? new Intl.DateTimeFormat('de-CH', { month: 'long', year: 'numeric' })
-          .format(new Date(latest.time))
-          .toUpperCase()
-      : 'NO ACTIVITY',
+      ? new Intl.DateTimeFormat('de-CH', {
+          month: 'long',
+          year: 'numeric',
+        }).format(new Date(latest.time))
+      : 'No activity',
     days: recent.map((item) => ({
       key: String(item.time),
       day: item.day,

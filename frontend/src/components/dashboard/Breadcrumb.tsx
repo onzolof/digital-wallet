@@ -16,7 +16,7 @@ export function Breadcrumb({ accountId, onAccounts }: BreadcrumbProps) {
   return (
     <div className="mb-7">
       <BreadcrumbNav>
-        <BreadcrumbList>
+        <BreadcrumbList className="text-base">
           <BreadcrumbItem>
             <BreadcrumbLink
               href="#accounts"

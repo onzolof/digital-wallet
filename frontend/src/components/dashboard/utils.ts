@@ -1,5 +1,28 @@
-export const formatMoney = (amount: number, currency = 'CHF') =>
-  new Intl.NumberFormat('de-CH', { style: 'currency', currency }).format(amount)
+export type AmountParts = {
+  currency: string
+  sign: string
+  amount: string
+  negative: boolean
+}
+
+export function splitAmount(value: number, currency = 'CHF'): AmountParts {
+  const negative = value < 0
+  const amount = new Intl.NumberFormat('de-CH', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(Math.abs(value))
+  return {
+    currency,
+    sign: negative ? '-' : '',
+    amount,
+    negative,
+  }
+}
+
+export const formatMoney = (value: number, currency = 'CHF') => {
+  const parts = splitAmount(value, currency)
+  return `${parts.currency} ${parts.sign}${parts.amount}`
+}
 
 export const formatDate = (value: string) =>
   new Intl.DateTimeFormat('de-CH', {
@@ -10,6 +33,3 @@ export const formatDate = (value: string) =>
 
 export const isCredit = (indicator: string) =>
   indicator.toUpperCase() === 'CREDIT'
-
-export const balanceTone = (amount: number) =>
-  amount < 0 ? 'text-red-600' : 'text-[#17251f]'
