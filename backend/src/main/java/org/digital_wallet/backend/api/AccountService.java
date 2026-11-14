@@ -85,8 +85,8 @@ public class AccountService {
                 account.nickname(),
                 account.accountId(),
                 account.currency(),
-                account.accountType(),
                 account.accountCategory(),
+                account.accountType(),
                 null,
                 null,
                 transactions);
