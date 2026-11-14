@@ -15,7 +15,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AccountOverviewDto"
+                $ref: "#/components/schemas/AccountOverview"
   /accounts/{accountId}:
     get:
       operationId: getAccount
@@ -30,7 +30,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AccountDto"
+                $ref: "#/components/schemas/Account"
         "404":
           description: Account not found
 components:
@@ -42,7 +42,7 @@ components:
       schema:
         type: string
   schemas:
-    AccountOverviewDto:
+    AccountOverview:
       type: object
       required:
         - userId
@@ -55,72 +55,68 @@ components:
         username:
           type: string
         totalBalanceChf:
-          type: integer
-          format: int64
-          description: Total balance in CHF, as a 64-bit integer.
+          type: number
+          description: Total balance in CHF, as a decimal.
         accounts:
           type: array
           items:
-            $ref: "#/components/schemas/AccountEntry"
-    AccountEntry:
+            $ref: "#/components/schemas/MinimalAccount"
+    MinimalAccount:
       type: object
       required:
+        - userId
+        - username
         - accountId
-        - status
         - currency
-        - accountType
-        - accountSubType
+        - accountCategory
         - totalBalance
         - totalBalanceChf
       properties:
-        accountId:
+        userId:
           type: string
-        status:
+        username:
+          type: string
+        accountId:
           type: string
         currency:
           type: string
-        accountType:
-          type: string
-        accountSubType:
+        accountCategory:
           type: string
         totalBalance:
-          type: integer
-          format: int64
-          description: Account balance in the account currency, as a 64-bit integer.
+          type: number
+          description: Account balance in the account currency, as a decimal.
         totalBalanceChf:
-          type: integer
-          format: int64
-          description: Account balance in CHF, as a 64-bit integer.
-    AccountDto:
+          type: number
+          description: Account balance in CHF, as a decimal.
+    Account:
       type: object
       required:
+        - userId
+        - username
         - accountId
-        - status
         - currency
         - accountType
-        - accountSubType
+        - accountCategory
         - totalBalance
         - totalBalanceChf
         - transactions
       properties:
-        accountId:
+        userId:
           type: string
-        status:
+        username:
+          type: string
+        accountId:
           type: string
         currency:
           type: string
         accountType:
           type: string
-        accountSubType:
+        accountCategory:
           type: string
         totalBalance:
-          type: integer
-          format: int64
-          description: Account balance in the account currency, as a 64-bit integer.
+          type: number
         totalBalanceChf:
-          type: integer
-          format: int64
-          description: Account balance in CHF, as a 64-bit integer.
+          type: number
         transactions:
           type: array
           items:
@@ -131,11 +127,11 @@ components:
         - accountId
         - transactionId
         - amount
+        - amountRounded
         - currency
         - creditDebitIndicator
         - status
         - bookingDateTime
-        - bookingDate
         - transactionInformation
       properties:
         accountId:
@@ -143,7 +139,9 @@ components:
         transactionId:
           type: string
         amount:
-          type: string
+          type: number
+        amountRounded:
+          type: number
         currency:
           type: string
         creditDebitIndicator:
@@ -153,8 +151,5 @@ components:
         bookingDateTime:
           type: string
           format: date-time
-        bookingDate:
-          type: string
-          format: date
         transactionInformation:
           type: string

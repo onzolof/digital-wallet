@@ -24,7 +24,7 @@ class NatWestClientSandboxTest {
 
     @Test
     void fetchesAccountsAndTransactionsForTheFirstAccount() {
-        List<NatwestAccount> accounts = client.fetchAccounts();
+        List<NatWestAccount> accounts = client.fetchAccounts();
 
         assertThat(accounts).isNotEmpty().allSatisfy(account -> {
             assertThat(account.accountId()).isNotBlank();

@@ -1,11 +1,11 @@
 package org.digital_wallet.backend.natwest;
 
-public record NatwestAccount(
+public record NatWestAccount(
 		String accountId,
 		String status,
 		String currency,
 		String accountType,
-		String accountSubType,
+		String accountCategory,
 		String nickname,
 		String schemeName,
 		String identification

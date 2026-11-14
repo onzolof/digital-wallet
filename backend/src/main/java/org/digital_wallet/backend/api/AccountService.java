@@ -3,17 +3,20 @@ package org.digital_wallet.backend.api;
 import org.digital_wallet.backend.api.model.*;
 import org.digital_wallet.backend.natwest.NatWestClient;
 import org.digital_wallet.backend.natwest.NatWestTransaction;
-import org.digital_wallet.backend.natwest.NatwestAccount;
+import org.digital_wallet.backend.natwest.NatWestAccount;
+import org.digital_wallet.backend.utils.CalculationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class AccountService {
+
+//    todo: write unit test
 
     private final NatWestClient natWestClient;
 
@@ -22,43 +25,62 @@ public class AccountService {
         this.natWestClient = natWestClient;
     }
 
-    public AccountOverviewDto getAccountOverview() {
-        List<AccountEntry> accounts = natWestClient.fetchAccounts().stream()
-                .map(this::toAccountEntry)
+    public Optional<AccountOverview> getAccountOverview() {
+        List<MinimalAccount> accountList = fetchAccounts()
+                .stream()
+                .map(this::toMinimalAccount)
                 .toList();
-        return new AccountOverviewDto(null, null, null, accounts);
+        if (accountList.isEmpty()) {
+            return Optional.empty();
+        } else {
+            // derive the account owner from the first account (assume, all accounts belong to the same individual)
+            MinimalAccount firstAccount = accountList.getFirst();
+            BigDecimal overallBalance = accountList.stream()
+                    .map(MinimalAccount::getTotalBalanceChf)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            return Optional.of(new AccountOverview(firstAccount.getUserId(), firstAccount.getUsername(), overallBalance, accountList));
+        }
     }
 
-    public Optional<AccountDto> getAccount(String accountId) {
-        return natWestClient.fetchAccounts().stream()
-                .filter(account -> accountId.equals(account.accountId()))
-                .findFirst()
+    public Optional<Account> getAccount(String accountId) {
+        return fetchAccounts().stream().filter(account -> accountId.equals(account.getAccountId())).findFirst();
+    }
+
+    private List<Account> fetchAccounts() {
+        List<Account> fetchedAccounts = natWestClient.fetchAccounts()
+                .stream()
                 .map(natWestAccount -> {
                     List<Transaction> transactions = natWestClient.fetchTransactions(natWestAccount.accountId()).stream()
                             .map(AccountService::toTransaction)
                             .toList();
-                    return toAccountDto(natWestAccount, transactions);
-                });
+                    return toAccount(natWestAccount, transactions);
+                })
+                .toList();
+//        todo: append fake data here
+//        todo: properly lookup the exchange rate
+        return CalculationUtils.recalculateAccountBalances(fetchedAccounts, new BigDecimal(1.1));
     }
 
-    private AccountEntry toAccountEntry(NatwestAccount account) {
-        return new AccountEntry(
-                account.accountId(),
-                account.status(),
-                account.currency(),
-                account.accountType(),
-                account.accountSubType(),
-                null,
-                null);
+
+    private MinimalAccount toMinimalAccount(Account account) {
+        return new MinimalAccount(
+                account.getUserId(),
+                account.getUsername(),
+                account.getAccountId(),
+                account.getCurrency(),
+                account.getAccountType(),
+                account.getTotalBalance(),
+                account.getTotalBalanceChf());
     }
 
-    private AccountDto toAccountDto(NatwestAccount account, List<Transaction> transactions) {
-        return new AccountDto(
+    private Account toAccount(NatWestAccount account, List<Transaction> transactions) {
+        return new Account(
+                account.identification(),
+                account.nickname(),
                 account.accountId(),
-                account.status(),
                 account.currency(),
                 account.accountType(),
-                account.accountSubType(),
+                account.accountCategory(),
                 null,
                 null,
                 transactions);
@@ -66,16 +88,16 @@ public class AccountService {
 
     private static Transaction toTransaction(NatWestTransaction transaction) {
         OffsetDateTime bookingDateTime = bookingDateTime(transaction.bookingDateTime());
-        LocalDate bookingDate = bookingDateTime != null ? bookingDateTime.toLocalDate() : null;
+        BigDecimal amount = new BigDecimal(transaction.amount());
         return new Transaction(
                 transaction.accountId(),
                 transaction.transactionId(),
-                transaction.amount(),
+                amount,
+                CalculationUtils.roundIfNeeded(transaction.currency(), amount),
                 transaction.currency(),
                 transaction.creditDebitIndicator(),
                 transaction.status(),
                 bookingDateTime,
-                bookingDate,
                 transaction.transactionInformation());
     }
 
@@ -85,4 +107,5 @@ public class AccountService {
         }
         return OffsetDateTime.parse(value);
     }
+
 }

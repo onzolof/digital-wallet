@@ -61,6 +61,8 @@ class NatWestClientTest {
         assertThat(client.fetchAccounts()).singleElement().satisfies(account -> {
             assertThat(account.accountId()).isEqualTo("acc-1");
             assertThat(account.currency()).isEqualTo("GBP");
+            assertThat(account.accountType()).isEqualTo("Personal");
+            assertThat(account.accountCategory()).isEqualTo("CurrentAccount");
             assertThat(account.nickname()).isEqualTo("Household");
             assertThat(account.schemeName()).isEqualTo("UK.OBIE.SortCodeAccountNumber");
             assertThat(account.identification()).isEqualTo("50000012345601");
@@ -199,8 +201,8 @@ class NatWestClientTest {
                   "AccountId":"acc-1",
                   "Status":"Enabled",
                   "Currency":"GBP",
-                  "AccountType":"Personal",
-                  "AccountSubType":"CurrentAccount",
+                  "AccountCategory":"Personal",
+                  "AccountTypeCode":"CurrentAccount",
                   "Nickname":"Household",
                   "Account":[{"SchemeName":"UK.OBIE.SortCodeAccountNumber","Identification":"50000012345601"}]
                 }]}}

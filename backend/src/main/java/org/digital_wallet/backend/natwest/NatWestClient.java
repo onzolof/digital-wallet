@@ -46,7 +46,7 @@ public class NatWestClient {
         this.jsonMapper = jsonMapper;
     }
 
-    public List<NatwestAccount> fetchAccounts() {
+    public List<NatWestAccount> fetchAccounts() {
         return withAccessToken(this::readAccounts, true);
     }
 
@@ -177,22 +177,22 @@ public class NatWestClient {
         return parseRequiredText(response, "access_token");
     }
 
-    private List<NatwestAccount> readAccounts(String accessToken) {
+    private List<NatWestAccount> readAccounts(String accessToken) {
         JsonNode accounts = get(properties.apiUrlPrefix() + ACCOUNTS_URL, accessToken)
                 .path("Data")
                 .path("Account");
         if (!accounts.isArray()) {
             return List.of();
         }
-        List<NatwestAccount> result = new ArrayList<>();
+        List<NatWestAccount> result = new ArrayList<>();
         for (JsonNode account : accounts) {
             JsonNode identification = extractFirstIdentification(account);
-            result.add(new NatwestAccount(
+            result.add(new NatWestAccount(
                     parseText(account, "AccountId"),
                     parseText(account, "Status"),
                     parseText(account, "Currency"),
-                    parseText(account, "AccountType"),
-                    parseText(account, "AccountSubType"),
+                    parseText(account, "AccountCategory"),
+                    parseText(account, "AccountTypeCode"),
                     parseText(account, "Nickname"),
                     parseText(identification, "SchemeName"),
                     parseText(identification, "Identification")));
