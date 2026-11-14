@@ -1,8 +1,8 @@
 import { useMemo } from 'react'
-import { Card, CardContent } from '@/components/ui/card'
-import { formatMoney } from '@/components/dashboard/utils'
-import { cashFlow } from '@/components/dashboard/chartUtils'
-import type { Transaction } from '@/store/walletApi'
+import { Card, CardContent } from '@/components/ui/card.tsx'
+import { formatMoney } from '@/components/utils.ts'
+import { cashFlow } from '@/components/chartUtils.ts'
+import type { Transaction } from '@/store/walletApi.ts'
 
 type TransactionChartProps = {
   transactions: Transaction[]

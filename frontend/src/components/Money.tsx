@@ -1,5 +1,5 @@
-import { cn } from '@/lib/utils'
-import { splitAmount } from '@/components/dashboard/utils'
+import { cn } from '@/lib/utils.ts'
+import { splitAmount } from '@/components/utils.ts'
 
 type MoneyProps = {
   value: number

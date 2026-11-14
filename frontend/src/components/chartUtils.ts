@@ -1,5 +1,5 @@
-import { isCredit } from '@/components/dashboard/utils'
-import type { Transaction } from '@/store/walletApi'
+import { isCredit } from '@/components/utils.ts'
+import type { Transaction } from '@/store/walletApi.ts'
 
 export type CashFlowDay = {
   key: string

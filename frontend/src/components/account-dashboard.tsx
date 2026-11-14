@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { ArrowLeft } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
-import { AccountCard } from '@/components/dashboard/AccountCard'
-import { Breadcrumb } from '@/components/dashboard/Breadcrumb'
-import { DashboardHeader } from '@/components/dashboard/DashboardHeader'
-import { Money } from '@/components/dashboard/Money'
-import { TransactionChart } from '@/components/dashboard/TransactionChart'
-import { TransactionTable } from '@/components/dashboard/TransactionTable'
+import { AccountCard } from '@/components/AccountCard.tsx'
+import { Breadcrumb } from '@/components/Breadcrumb.tsx'
+import { DashboardHeader } from '@/components/DashboardHeader.tsx'
+import { Money } from '@/components/Money.tsx'
+import { TransactionChart } from '@/components/TransactionChart.tsx'
+import { TransactionTable } from '@/components/TransactionTable.tsx'
 import {
   useGetAccountOverviewQuery,
   useGetAccountQuery,

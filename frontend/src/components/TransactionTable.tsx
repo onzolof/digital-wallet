@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react'
 import { ArrowDownLeft, ArrowUpRight, ChevronDown, Search } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
-import { Card, CardContent } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
+import { Badge } from '@/components/ui/badge.tsx'
+import { Card, CardContent } from '@/components/ui/card.tsx'
+import { Input } from '@/components/ui/input.tsx'
 import {
   Table,
   TableBody,
@@ -10,16 +10,16 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
-import { Money } from '@/components/dashboard/Money'
-import { formatDate, isCredit } from '@/components/dashboard/utils'
+} from '@/components/ui/table.tsx'
+import { Money } from '@/components/Money.tsx'
+import { formatDate, isCredit } from '@/components/utils.ts'
 import {
   toggleSort,
   visibleTransactions,
   type TransactionSort,
-} from '@/components/dashboard/transactionTableUtils'
-import { cn } from '@/lib/utils'
-import type { Transaction } from '@/store/walletApi'
+} from '@/components/transactionTableUtils.ts'
+import { cn } from '@/lib/utils.ts'
+import type { Transaction } from '@/store/walletApi.ts'
 
 type TransactionTableProps = {
   transactions: Transaction[]

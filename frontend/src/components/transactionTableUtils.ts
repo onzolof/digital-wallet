@@ -1,4 +1,4 @@
-import type { Transaction } from '@/store/walletApi'
+import type { Transaction } from '@/store/walletApi.ts'
 
 export type SortKey = 'bookingDateTime' | 'transactionInformation' | 'amount'
 export type TransactionSort = { key: SortKey; direction: 'asc' | 'desc' }

@@ -1,9 +1,9 @@
 import type { LucideIcon } from 'lucide-react'
 import { ChevronRight, Coins, CreditCard, PiggyBank, Plane } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
-import { Money } from '@/components/dashboard/Money'
-import { formatMoney } from '@/components/dashboard/utils'
-import type { MinimalAccount } from '@/store/walletApi'
+import { Card, CardContent } from '@/components/ui/card.tsx'
+import { Money } from '@/components/Money.tsx'
+import { formatMoney } from '@/components/utils.ts'
+import type { MinimalAccount } from '@/store/walletApi.ts'
 
 function accountIcon(category: string): LucideIcon {
   const normalized = category.toLowerCase()

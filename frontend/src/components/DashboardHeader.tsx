@@ -1,6 +1,6 @@
 import { LineChart } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
-import { Money } from '@/components/dashboard/Money'
+import { Card, CardContent } from '@/components/ui/card.tsx'
+import { Money } from '@/components/Money.tsx'
 
 type DashboardHeaderProps = {
   username: string
