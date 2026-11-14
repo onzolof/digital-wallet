@@ -131,7 +131,10 @@ export function TransactionTable({ transactions }: TransactionTableProps) {
                     {formatDate(transaction.bookingDateTime)}
                   </TableCell>
                   <TableCell>
-                    <Badge variant="secondary" className="text-muted-foreground">
+                    <Badge
+                      variant="secondary"
+                      className="text-muted-foreground"
+                    >
                       {transaction.status}
                     </Badge>
                   </TableCell>

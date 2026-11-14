@@ -1,11 +1,5 @@
 import type { LucideIcon } from 'lucide-react'
-import {
-  ChevronRight,
-  Coins,
-  CreditCard,
-  PiggyBank,
-  Plane,
-} from 'lucide-react'
+import { ChevronRight, Coins, CreditCard, PiggyBank, Plane } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Money } from '@/components/dashboard/Money'
 import { formatMoney } from '@/components/dashboard/utils'
