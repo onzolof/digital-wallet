@@ -1,0 +1,160 @@
+openapi: 3.0.3
+info:
+  title: Digital Wallet API
+  version: 0.1.0
+paths:
+  /accounts:
+    get:
+      operationId: getAccountOverview
+      tags:
+        - Accounts
+      summary: Account overview for the current user
+      responses:
+        "200":
+          description: Account overview
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountOverviewDto"
+  /accounts/{accountId}:
+    get:
+      operationId: getAccount
+      tags:
+        - Accounts
+      summary: One account
+      parameters:
+        - $ref: "#/components/parameters/AccountId"
+      responses:
+        "200":
+          description: The account
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountDto"
+        "404":
+          description: Account not found
+components:
+  parameters:
+    AccountId:
+      name: accountId
+      in: path
+      required: true
+      schema:
+        type: string
+  schemas:
+    AccountOverviewDto:
+      type: object
+      required:
+        - userId
+        - username
+        - totalBalanceChf
+        - accounts
+      properties:
+        userId:
+          type: string
+        username:
+          type: string
+        totalBalanceChf:
+          type: integer
+          format: int64
+          description: Total balance in CHF, as a 64-bit integer.
+        accounts:
+          type: array
+          items:
+            $ref: "#/components/schemas/AccountEntry"
+    AccountEntry:
+      type: object
+      required:
+        - accountId
+        - status
+        - currency
+        - accountType
+        - accountSubType
+        - totalBalance
+        - totalBalanceChf
+      properties:
+        accountId:
+          type: string
+        status:
+          type: string
+        currency:
+          type: string
+        accountType:
+          type: string
+        accountSubType:
+          type: string
+        totalBalance:
+          type: integer
+          format: int64
+          description: Account balance in the account currency, as a 64-bit integer.
+        totalBalanceChf:
+          type: integer
+          format: int64
+          description: Account balance in CHF, as a 64-bit integer.
+    AccountDto:
+      type: object
+      required:
+        - accountId
+        - status
+        - currency
+        - accountType
+        - accountSubType
+        - totalBalance
+        - totalBalanceChf
+        - transactions
+      properties:
+        accountId:
+          type: string
+        status:
+          type: string
+        currency:
+          type: string
+        accountType:
+          type: string
+        accountSubType:
+          type: string
+        totalBalance:
+          type: integer
+          format: int64
+          description: Account balance in the account currency, as a 64-bit integer.
+        totalBalanceChf:
+          type: integer
+          format: int64
+          description: Account balance in CHF, as a 64-bit integer.
+        transactions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Transaction"
+    Transaction:
+      type: object
+      required:
+        - accountId
+        - transactionId
+        - amount
+        - currency
+        - creditDebitIndicator
+        - status
+        - bookingDateTime
+        - bookingDate
+        - transactionInformation
+      properties:
+        accountId:
+          type: string
+        transactionId:
+          type: string
+        amount:
+          type: string
+        currency:
+          type: string
+        creditDebitIndicator:
+          type: string
+        status:
+          type: string
+        bookingDateTime:
+          type: string
+          format: date-time
+        bookingDate:
+          type: string
+          format: date
+        transactionInformation:
+          type: string
