@@ -35,18 +35,18 @@ export function AccountCard({ account, onSelect }: AccountCardProps) {
       onClick={() => onSelect(account.accountId)}
       aria-label={`Open ${account.accountCategory}, account ${account.accountId}, balance ${formatMoney(account.totalBalance, account.currency)}`}
     >
-      <Card className="h-full transition duration-150 ease-out hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(23,37,31,0.08)]">
+      <Card className="h-full transition duration-150 ease-out hover:-translate-y-0.5 hover:shadow-md">
         <CardContent>
           <div className="flex items-center justify-between gap-4">
-            <span className="inline-flex size-[42px] items-center justify-center rounded-xl bg-[#e7f3ec] text-[#1f7a4d] [&_svg]:size-[18px]">
+            <span className="inline-flex size-[42px] items-center justify-center rounded-xl bg-income-subtle text-income [&_svg]:size-[18px]">
               <Icon />
             </span>
-            <ChevronRight className="size-[18px] text-[#98a2b3]" />
+            <ChevronRight className="size-[18px] text-muted-foreground" />
           </div>
           <div className="mt-5 mb-3 text-lg font-semibold">
             {account.accountCategory}
           </div>
-          <div className="mb-3 break-all text-[13px] text-[#667085]">
+          <div className="mb-3 break-all text-[13px] text-muted-foreground">
             {account.accountId}
           </div>
           <Money

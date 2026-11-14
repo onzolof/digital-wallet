@@ -19,22 +19,22 @@ export function TransactionChart({
     <Card className="mt-[22px]">
       <CardContent>
         <div>
-          <h2 className="m-0 text-[1.75rem] font-semibold tracking-tight text-[#17251f]">
+          <h2 className="m-0 text-[1.75rem] font-semibold tracking-tight text-foreground">
             Income vs. Expenses
           </h2>
         </div>
-        <div className="mt-[18px] flex items-center gap-6 text-[13px] text-[#475467]">
+        <div className="mt-[18px] flex items-center gap-6 text-[13px] text-muted-foreground">
           <span className="inline-flex items-center gap-2">
-            <i className="size-2 rounded-full bg-[#1f7a4d]" />
+            <i className="size-2 rounded-full bg-income" />
             Income
           </span>
           <span className="inline-flex items-center gap-2">
-            <i className="size-2 rounded-full bg-[#d7ddd8]" />
+            <i className="size-2 rounded-full bg-expense" />
             Expenses
           </span>
         </div>
         <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-[88px_1fr]">
-          <div className="hidden h-[180px] flex-col justify-between text-right text-[11px] text-[#98a2b3] md:flex">
+          <div className="hidden h-[180px] flex-col justify-between text-right text-[11px] text-muted-foreground md:flex">
             <span>{formatMoney(flow.axisMax, currency)}</span>
             <span>{formatMoney(flow.axisMax * 0.75, currency)}</span>
             <span>{formatMoney(flow.axisMax * 0.5, currency)}</span>
@@ -44,7 +44,7 @@ export function TransactionChart({
           <div className="relative h-[180px]">
             <div className="absolute inset-0 flex flex-col justify-between">
               {Array.from({ length: 5 }).map((_, index) => (
-                <i key={index} className="border-t border-[#eef0f2]" />
+                <i key={index} className="border-t border-border" />
               ))}
             </div>
             <div className="relative grid h-full grid-cols-[repeat(14,minmax(0,1fr))]">
@@ -55,17 +55,17 @@ export function TransactionChart({
                 >
                   <div className="flex h-[calc(100%-22px)] w-full items-end justify-center gap-[3px]">
                     <span
-                      className="block w-2 rounded-t-md rounded-b-sm bg-[#1f7a4d]"
+                      className="block w-2 rounded-t-md rounded-b-sm bg-income"
                       style={{ height: `${item.income}%` }}
                       title={`Income ${formatMoney(item.incomeAmount, currency)}`}
                     />
                     <span
-                      className="block w-2 rounded-t-md rounded-b-sm bg-[#d7ddd8]"
+                      className="block w-2 rounded-t-md rounded-b-sm bg-expense"
                       style={{ height: `${item.expenses}%` }}
                       title={`Expenses ${formatMoney(item.expenseAmount, currency)}`}
                     />
                   </div>
-                  <span className="mt-1.5 text-[11px] text-[#98a2b3]">
+                  <span className="mt-1.5 text-[11px] text-muted-foreground">
                     {item.day}
                   </span>
                 </div>
@@ -73,7 +73,7 @@ export function TransactionChart({
             </div>
           </div>
         </div>
-        <div className="mt-3 text-right text-xs font-medium text-[#98a2b3] md:text-right">
+        <div className="mt-3 text-right text-xs font-medium text-muted-foreground md:text-right">
           {flow.monthLabel}
         </div>
       </CardContent>

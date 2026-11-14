@@ -41,17 +41,14 @@ export function TransactionTable({ transactions }: TransactionTableProps) {
       <CardContent>
         <div className="mb-[18px] flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
           <div>
-            <h2 className="m-0 flex items-center gap-2.5 text-[1.75rem] font-semibold tracking-tight text-[#17251f]">
+            <h2 className="m-0 flex items-center gap-2.5 text-[1.75rem] font-semibold tracking-tight text-foreground">
               Transactions{' '}
-              <Badge
-                variant="secondary"
-                className="min-w-7 justify-center bg-[#eef2ef] text-[#17251f]"
-              >
+              <Badge variant="secondary" className="min-w-7 justify-center">
                 {rows.length}
               </Badge>
             </h2>
           </div>
-          <label className="flex w-full items-center gap-2 rounded-[10px] border border-[#e4e7ec] pl-3 text-[#98a2b3] md:w-[260px] [&_svg]:size-[18px]">
+          <label className="flex w-full items-center gap-2 rounded-[10px] border border-input pl-3 text-muted-foreground md:w-[260px] [&_svg]:size-[18px]">
             <Search />
             <Input
               aria-label="Search transactions"
@@ -116,28 +113,25 @@ export function TransactionTable({ transactions }: TransactionTableProps) {
                         className={cn(
                           'inline-flex size-[34px] items-center justify-center rounded-[10px] [&_svg]:size-[18px]',
                           incoming
-                            ? 'bg-[#e7f3ec] text-[#1f7a4d]'
-                            : 'bg-[#f4f5f7] text-[#475467]',
+                            ? 'bg-income-subtle text-income'
+                            : 'bg-muted text-muted-foreground',
                         )}
                       >
                         {incoming ? <ArrowDownLeft /> : <ArrowUpRight />}
                       </span>
                       <span>
                         {transaction.transactionInformation}
-                        <small className="block text-[#98a2b3]">
+                        <small className="block text-muted-foreground">
                           {incoming ? 'Payment received' : 'Card payment'}
                         </small>
                       </span>
                     </div>
                   </TableCell>
-                  <TableCell className="text-[#667085]">
+                  <TableCell className="text-muted-foreground">
                     {formatDate(transaction.bookingDateTime)}
                   </TableCell>
                   <TableCell>
-                    <Badge
-                      variant="secondary"
-                      className="bg-[#eef2ef] text-[#667085]"
-                    >
+                    <Badge variant="secondary" className="text-muted-foreground">
                       {transaction.status}
                     </Badge>
                   </TableCell>
@@ -154,13 +148,13 @@ export function TransactionTable({ transactions }: TransactionTableProps) {
           </TableBody>
         </Table>
         {rows.length === 0 && (
-          <div className="px-2 py-7 text-[#667085]">
+          <div className="px-2 py-7 text-muted-foreground">
             {query
               ? 'No transactions match your search.'
               : 'No transactions on this account.'}
           </div>
         )}
-        <div className="mt-4 text-[13px] text-[#667085]">
+        <div className="mt-4 text-[13px] text-muted-foreground">
           Showing {rows.length}
         </div>
       </CardContent>

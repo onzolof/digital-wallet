@@ -18,11 +18,11 @@ export function Money({
 }: MoneyProps) {
   const parts = splitAmount(value, currency)
   const currencyClass =
-    variant === 'onDark' ? 'text-[#d5e4dc]' : 'text-[#17251f]'
+    variant === 'onDark' ? 'text-wallet-hero-muted' : 'text-foreground'
   const positiveAmountClass =
-    variant === 'onDark' ? 'text-[#d5e4dc]' : 'text-[#17251f]'
+    variant === 'onDark' ? 'text-wallet-hero-muted' : 'text-foreground'
   const negativeAmountClass =
-    variant === 'onDark' ? 'text-rose-200' : 'text-rose-400'
+    variant === 'onDark' ? 'text-destructive/60' : 'text-destructive/75'
 
   return (
     <span className={className}>

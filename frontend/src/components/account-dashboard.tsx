@@ -27,18 +27,18 @@ export function AccountDashboard() {
   const detail = selected ?? listed
 
   return (
-    <main className="min-h-screen bg-[#f7f8fa] text-[#17251f]">
+    <main className="min-h-screen bg-wallet-page text-foreground">
       <div className="mx-auto w-full max-w-[1120px] px-6 pb-16 pt-7">
         <Breadcrumb
           accountId={selectedId}
           onAccounts={() => setSelectedId(null)}
         />
         {overviewQuery.isLoading ? (
-          <p className="mt-7 rounded-[20px] bg-white px-8 py-7 text-[#667085]">
+          <p className="mt-7 rounded-[20px] bg-card px-8 py-7 text-muted-foreground">
             Loading your accounts…
           </p>
         ) : overviewQuery.isError || !overview ? (
-          <p className="mt-7 rounded-[20px] bg-white px-8 py-7 text-[#667085]">
+          <p className="mt-7 rounded-[20px] bg-card px-8 py-7 text-muted-foreground">
             Accounts could not be loaded.
           </p>
         ) : !selectedId ? (
@@ -49,12 +49,9 @@ export function AccountDashboard() {
             />
             <section className="mt-9">
               <div>
-                <h2 className="m-0 flex items-center gap-2.5 text-[1.75rem] font-semibold tracking-tight text-[#17251f]">
+                <h2 className="m-0 flex items-center gap-2.5 text-[1.75rem] font-semibold tracking-tight text-foreground">
                   Your accounts{' '}
-                  <Badge
-                    variant="secondary"
-                    className="min-w-7 justify-center bg-[#eef2ef] text-[#17251f]"
-                  >
+                  <Badge variant="secondary" className="min-w-7 justify-center">
                     {String(overview.accounts.length).padStart(2, '0')}
                   </Badge>
                 </h2>
@@ -74,7 +71,7 @@ export function AccountDashboard() {
           <>
             <section>
               <button
-                className="mb-[18px] inline-flex cursor-pointer items-center gap-2 border-0 bg-transparent p-0 text-[#475467] [&_svg]:size-[18px]"
+                className="mb-[18px] inline-flex cursor-pointer items-center gap-2 border-0 bg-transparent p-0 text-muted-foreground [&_svg]:size-[18px]"
                 type="button"
                 onClick={() => setSelectedId(null)}
               >
@@ -83,15 +80,15 @@ export function AccountDashboard() {
               </button>
               <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
                 <div>
-                  <h1 className="m-0 text-4xl font-semibold leading-tight tracking-tight text-[#17251f]">
+                  <h1 className="m-0 text-4xl font-semibold leading-tight tracking-tight text-foreground">
                     {detail?.accountCategory ?? 'Account'}
                   </h1>
-                  <p className="mt-2 text-[#667085]">
+                  <p className="mt-2 text-muted-foreground">
                     {selected?.accountType ?? ''}
                   </p>
                 </div>
                 <div className="text-left md:text-right">
-                  <span className="block text-[13px] text-[#667085]">
+                  <span className="block text-[13px] text-muted-foreground">
                     Current balance
                   </span>
                   {detail ? (
@@ -107,11 +104,11 @@ export function AccountDashboard() {
               </div>
             </section>
             {accountQuery.isLoading ? (
-              <p className="mt-7 rounded-[20px] bg-white px-8 py-7 text-[#667085]">
+              <p className="mt-7 rounded-[20px] bg-card px-8 py-7 text-muted-foreground">
                 Loading transactions…
               </p>
             ) : accountQuery.isError || !selected ? (
-              <p className="mt-7 rounded-[20px] bg-white px-8 py-7 text-[#667085]">
+              <p className="mt-7 rounded-[20px] bg-card px-8 py-7 text-muted-foreground">
                 This account could not be loaded.
               </p>
             ) : (
