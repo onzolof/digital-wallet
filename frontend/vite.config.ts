@@ -13,6 +13,11 @@ export default defineConfig({
       '@': path.resolve(root, 'src'),
     },
   },
+  server: {
+    proxy: {
+      '/digital-wallet': 'http://localhost:8080',
+    },
+  },
   test: {
     environment: 'jsdom',
     setupFiles: './src/test/setup.ts',
