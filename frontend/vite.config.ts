@@ -6,7 +6,10 @@ import { defineConfig } from 'vitest/config'
 
 const root = path.dirname(fileURLToPath(import.meta.url))
 
+const repositoryBase = '/digital-wallet/'
+
 export default defineConfig({
+  base: repositoryBase,
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
